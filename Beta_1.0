@@ -1395,7 +1395,7 @@ function Kixley() {
     } else {
       alert('You pull a health potion out of your bag and drink it! Yum! It tastes like snickerdoodle cookies!')
       alert('Hit points restored!')
-      hitPoints += 10
+      hitPoints += 30
       healthPotion -= 1
       alert('You now have ' + hitPoints + ' health!')
       if (hitPoints > totalHealth) {
