@@ -162,7 +162,7 @@ function Kixley() {
     'John Georgiades',
     'Thanks to:',
     'The Stack Overflow community, for helping with bugs,',
-    'MDN, for helping us learn how to JavaScript,',
+    'MDN and Codecademy, for helping us learn how to JavaScript,',
     'And Atlassian, for making Bitbucket, which was used to create this.',
     'Thank you for playing Kixley! More content will be released in the future.',
   ];
@@ -744,7 +744,7 @@ function Kixley() {
     answer = prompt('Knight', 'Inspect, Choose, Exit').toUpperCase()
     switch (answer) {
       case 'INSPECT':
-        alert('The Knight is a fierce warrior. He/She knows when to fight and when to block, and trains himself ceaselessly. Attack + 2, Health + 50, Blobs of Doom - 100(also called mana or magicka)')
+        alert('The Knight is a fierce warrior. He/She knows when to fight and when to block, and trains himself ceaselessly. Attack + 2, Health + 15, Blobs of Doom - 100(also called mana or magicka), Spells 50% less effective.')
         KnightClass()
         break;
       case 'CHOOSE':
@@ -764,7 +764,7 @@ function Kixley() {
     answer = prompt('Mage', 'Inspect, Choose').toUpperCase()
     switch (answer) {
       case 'INSPECT':
-        alert('The Mage does not overuse the fight option. Rather, he/she uses magical attacks that damage the enemy. Attack - 2, Blobs of Doom (also called, in other games, mana or magicka) + 100, Spell effects ⋅ 1.5.')
+        alert('The Mage does not overuse the fight option. Rather, he/she uses magical attacks that damage the enemy. Attack - 2, Blobs of Doom (also called, in other games, mana or magicka) + 100, Health - 15, Spells 50% more effective.')
         MageClass()
         break;
       case 'CHOOSE':
@@ -800,30 +800,55 @@ function Kixley() {
         break;
     }
   }
+  
+  function ClericClass() {
+    answer = prompt('Cleric', 'Inspect, Choose').toUpperCase()
+    switch (answer) {
+      case 'INSPECT':
+        alert('The Cleric would prefer to heal friends than attack foes, but he/she will have to fight now. With the new Heal spell, they can restore some of their health. Attack - 3, Health + 10, Blobs of Doom (also called mana or magicka in other games) +  50, Spells 25% more effective, Heal spell.')
+        ClericClass()
+        break;
+      case 'CHOOSE':
+        ChoosingAClass(chosenClass)
+        break;
+      case 'EXIT':
+        ChooseClass()
+        break;
+      default:
+        NotAnOption()
+        ClericClass()
+        break;
+    }
+  }
 
   function ChoosingAClass(chosenClass) {
     answer = confirm('Are you sure?', 'Yes, No')
     switch (answer) {
       case true:
         if (chosenClass === 'knight, mage, barbarian') {
-          alert('You are now a mage!')
-        } else {
-          alert('You are now a ' + chosenClass + '!')
+          chosenClass = 'mage'
         }
+          alert('You are now a ' + chosenClass + '!')
         if (chosenClass === 'knight') {
           attackPower += 2
           hitPoints += 15
           blobsOfDoom -= 100
-          magicSkillz -= (0.5 * magicSkillz)
-        } else if (chosenClass === 'mage' || chosenClass === 'knight, mage, barbarian') {
+          magicSkillz = 0.5
+        } else if (chosenClass === 'mage') {
           attackPower -= 2
-          attackPower -= 15
+          hitPoints -= 15
           blobsOfDoom += 100
-          magicSkillz += (0.5 * magicSkillz)
-        } else if (chosenClass = 'barbarian') {
+          magicSkillz = 1.5
+        } else if (chosenClass === 'barbarian') {
           attackPower += 4
           hitPoints -= 25
-        } else if (chosenClass = 'super legendary') {
+        } else if (chosenClass === 'cleric') {
+          attackPower -= 3
+          magicalSpells.splice(1, 0, 'heal (30 Blobs of Doom)')
+          blobsOfDoom += 50
+          magicSkillz += 0.25
+          health += 30
+        }else if (chosenClass = 'super legendary') {
           magicSkillz = (1 / x)
           attackPower -= 5
           totalHealth -= 75
@@ -848,17 +873,20 @@ function Kixley() {
 
   function ChooseClass() {
     alert('Along with difficulty, we need you to choose your class. Please select one now.')
-    chosenClass = prompt('The classes are: Knights, Mages, and Barbarians', 'Knight, Mage, Barbarian').toLowerCase()
+    chosenClass = prompt('The classes are: Knights, Mages, Barbarians, and Clerics', 'Knight, Mage, Barbarian, Cleric').toLowerCase()
     switch (chosenClass) {
       case 'knight':
         KnightClass()
         break;
       case 'mage':
-      case 'knight, mage, barbarian':
+      case 'knight, mage, barbarian, cleric':
         MageClass()
         break;
       case 'barbarian':
         BarbarianClass()
+        break;
+      case 'cleric':
+        ClericClass()
         break;
       case 'super legendary':
         SuperLegendaryClass()
@@ -1193,19 +1221,19 @@ function Kixley() {
     }
     firstChar = answer.charAt(0)
     if (firstChar === '0' || firstChar === '1' || firstChar === '2' || firstChar === '3' || firstChar === '4' || firstChar === '5' || firstChar === '6' || firstChar === '7' || firstChar === '8' || firstChar === '9') {
-      answer = parseInt(answer, (10 * 1))
+      answer = parseInt(answer, (20 * 1))
       howMany = answer
       answer = prompt('Are you sure? You\'re going to buy ' + answer + ' health potions.', 'Yes, No').toUpperCase()
       switch (answer) {
         case 'YES':
-          if (totalGold < (10 * howMany)) {
+          if (totalGold < (20 * howMany)) {
             alert('You don\'t have enough gold to buy that many health potions. At max you could buy ' + Math.floor(totalGold / 10) + ' health potion(s).')
             InShop()
           } else {
             alert('Health potion(s) bought!')
             healthPotion += howMany
             answer = 0
-            totalGold -= (10 * howMany)
+            totalGold -= (20 * howMany)
             InShop()
           }
           break;
@@ -1367,7 +1395,7 @@ function Kixley() {
     } else {
       alert('You pull a health potion out of your bag and drink it! Yum! It tastes like snickerdoodle cookies!')
       alert('Hit points restored!')
-      hitPoints += 50
+      hitPoints += 10
       healthPotion -= 1
       alert('You now have ' + hitPoints + ' health!')
       if (hitPoints > totalHealth) {
@@ -1464,7 +1492,12 @@ function Kixley() {
   function ChooseSpell() {
     alert('What spell do you want? You have...')
     ListSpells()
-    answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Cancel').toUpperCase()
+    if (chosenClass === 'cleric') {
+      answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Heal, Cancel').toUpperCase()
+    }
+    else {
+      answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Cancel').toUpperCase()
+    }
     switch (answer) {
       case 'LIST':
         alert('You have...')
@@ -1489,6 +1522,16 @@ function Kixley() {
             rage()
         }
         break;
+        case 'HEAL':
+          if (chosenClass !== 'cleric') {
+            alert('You have heard of clerics using this spell, but you don\'t know how to use it.')
+          }
+          else if (blobsOfDoom < 30) {
+            alert('You don\'t have enough blobs of doom!')
+          }
+          else {
+            heal()
+          }
     }
   }
 
@@ -2532,6 +2575,18 @@ function Kixley() {
             MonsAtt()
           }
           ChooseSpell()
+    }
+  }
+  function heal() {
+    alert('You chant some moinous-sounding words, and your wounds heal')
+    alert('Hit points restored!')
+    hitPoints += 60
+    blobsOfDoom -= 30
+    burn()
+    MonsAtt()
+    }
+    Choose Spell()
+    }
   }
 }
 Kixley()
