@@ -74,7 +74,7 @@ function Kixley() {
   var runChance;
   var runAway = 0;
   var realAttackPower;
-  var accuracy = 0.25;
+  var accuracy = 75;
   var missChance;
   var blobsOfDoom = 50;
   var totalBlobsOfDoom = 50;
@@ -91,7 +91,9 @@ function Kixley() {
   var fightingAAbea;
   var fightingBalbeag;
   var magicSkillz = 1;
-  var useThisAccuracy;
+  var monsAcc = 90;
+  var monsStreak = 0;
+  var streak = 0;
   // monster drops
   var goldDrops;
   var expPoints;
@@ -184,6 +186,8 @@ function Kixley() {
   var usedSpeedBoots = 0;
   var woodenSword = 0;
   var speedBoots = 0;
+  var dropMult = 1;
+  
   //accounts
   var userCheck;
   var username;
@@ -322,12 +326,12 @@ function Kixley() {
       case 'PLAINS':
         plainsCounter += 1
         if (plainsCounter === 2) {
-          newMove = new Move('Crushing', attackPower, attackPower, 'none', 'Stick Pound', 0.25, '75%', 'Small', 'Bipedal')
-          newMove(newMove)
+          /*newMove = new Move('Crushing', attackPower, attackPower, 'none', 'Stick Pound', 0.25, '75%', 'Small', 'Bipedal')
+          newMove(newMove)*/
         }
         if (plainsCounter === 8) {
-          newMove = new Move('Whacking', attackPower + (attackPower * 0.40), attackPower + (attackPower * 0.40), 'none', 'Titanium Rod with Rocket Atachecd', 0.4, '60%', 'Quadruped', 'Small')
-          newMove(newMove)
+          /*newMove = new Move('Whacking', attackPower + (attackPower * 0.40), attackPower + (attackPower * 0.40), 'none', 'Titanium Rod with Rocket Atachecd', 0.4, '60%', 'Quadruped', 'Small')
+          newMove(newMove)*/
         }
         if (plainsCounter === 7) {
           alert('As you are walking through the plains you see a map lying on the ground. It shows a path leading to a nearby swamp.')
@@ -373,12 +377,12 @@ function Kixley() {
             aabeaDestroysTown = 1
           }
           if (swampCounter === 1) {
-            newMove = new Move('Slicing', attackPower, attackPower, 'none', 'Knife', 0.25, '75%', 'Bipedal', 'Quadruped')
-            newMove(newMove)
+            /*newMove = new Move('Slicing', attackPower, attackPower, 'none', 'Knife', 0.25, '75%', 'Bipedal', 'Quadruped')
+            newMove(newMove)*/
           }
           if (swampCounter === 8) {
-            newMove = new Move('Crushing', attackPower + (attackPower * 0.40), attackPower + (attackPower * 0.40), 'none', '707@L $UPAH 1337 $71€K P0UND', 0.40, '60%', 'Small', 'Bipedal')
-            newMove(newMove)
+            /*newMove = new Move('Crushing', attackPower + (attackPower * 0.40), attackPower + (attackPower * 0.40), 'none', '707@L $UPAH 1337 $71€K P0UND', 0.40, '60%', 'Small', 'Bipedal')
+            newMove(newMove)*/
           }
           swampCounter += 1
           randomNumber(1, 2)
@@ -442,9 +446,9 @@ function Kixley() {
           compAchieve.push('Kill 20 Monsters');
         }
         if (getGoldAchieve === 1 / 0 && level >= 20 && kilCounter >= 20 && doTheThingOfDoom === true) {
-          newMove = new Move('TODOS LOS TIPOS', Math.pow(attackPower, 4), 'a whole lot of', 'unneeded', '70T@1 $UP@H 1337 M1G PR0 360 N0-$C0P3 $K33LZ!!11!1!', 0, '100%', null, null)
+          /*newMove = new Move('TODOS LOS TIPOS', Math.pow(attackPower, 4), 'a whole lot of', 'unneeded', '70T@1 $UP@H 1337 M1G PR0 360 N0-$C0P3 $K33LZ!!11!1!', 0, '100%', null, null)
           doingTheThingOfDoom = true
-          newMove(newMove)
+          newMove(newMove)*/
         }
         Places();
         break;
@@ -507,8 +511,8 @@ function Kixley() {
       case 'PINEAPPLES':
         alert('The mighty pineapple sits on his throne atop the highest mountain of Uruloki. In his slow, booming, voice, he says, \'Whoever has called upon me shall perish!\' Then he turns on you and shoots you with lasers coming from his eyes.')
         alert('\'GAHHH!!!\' you scream as you wake up. \'Oh,\' you think. \'That was just a dream. Whew!\' You stand up and continue browsing your achievements.');
-        newMove = new Move('Slicing', attackPower + 3, 'a little more than normal', 'none', 'Machete', 0.20, '80%', 'Bipedal', 'Quadruped')
-        newMove(newMove)
+        /*newMove = new Move('Slicing', attackPower + 3, 'a little more than normal', 'none', 'Machete', 0.20, '80%', 'Bipedal', 'Quadruped')
+        newMove(newMove)*/
         achievementMenu();
         break;
       case 'EXIT':
@@ -820,7 +824,83 @@ function Kixley() {
         break;
     }
   }
-
+  
+  function PrinceClass() {
+    answer = prompt('Prince', 'Inspect, Choose').toUpperCase()
+    switch (answer) {
+      case 'INSPECT':
+        alert('The Prince is like a Knight on steroids. The fight option is definitly the choice for this class. Attack + 4, Health + 30, Blobs of Doom (also called mana or magicka in other games) - 200, Spells 75% less effective.')
+        PrinceClass()
+        break;
+      case 'CHOOSE':
+        ChoosingAClass(chosenClass)
+        break;
+      case 'EXIT':
+        ChooseClass()
+        break;
+      default:
+        NotAnOption()
+        PrinceClass()
+        break;
+    }
+  }
+  function ArchmageClass() {
+    answer = prompt('Arch-Mage', 'Inspect, Choose').toUpperCase()
+    switch (answer) {
+      case 'INSPECT':
+        alert('The Arch-Mage is like a Mage on steroids. You should definitly use some magic as this class. Attack - 4, Health - 30, Blobs of Doom (also called mana or magicka in other games) + 200, Spells 75% more effective.')
+        ArchmageClass()
+        break;
+      case 'CHOOSE':
+        ChoosingAClass(chosenClass)
+        break;
+      case 'EXIT':
+        ChooseClass()
+        break;
+      default:
+        NotAnOption()
+        ArchmageClass()
+        break;
+    }
+  }
+  function ThiefClass() {
+    answer = prompt('Thief', 'Inspect, Choose').toUpperCase()
+    switch (answer) {
+      case 'INSPECT':
+        alert('The Thief class has put his/her stealing ability to good use. Now, he/she steals from monsters! Attack - 1, Blobs of Doom (also called mana or magicka in other games) - 50, Accuracy + 5%, Drops + 50%.')
+        ThiefClass()
+        break;
+      case 'CHOOSE':
+        ChoosingAClass(chosenClass)
+        break;
+      case 'EXIT':
+        ChooseClass()
+        break;
+      default:
+        NotAnOption()
+        ThiefClass()
+        break;
+    }
+  }
+    function NinjaClass() {
+    answer = prompt('Ninja', 'Inspect, Choose').toUpperCase()
+    switch (answer) {
+      case 'INSPECT':
+        alert('The Ninja class is oriented towards hitting more and getting hit less. With higher accuracy, this master of hiding also decreases his/her opponent\'s accuracy go down. Attack - 2, Blobs of Doom (also called mana or magicka in other games) - 50, Accuracy + 5%, Monster Accuracy - 10%')
+        NinjaClass()
+        break;
+      case 'CHOOSE':
+        ChoosingAClass(chosenClass)
+        break;
+      case 'EXIT':
+        ChooseClass()
+        break;
+      default:
+        NotAnOption()
+        NinjaClass()
+        break;
+    }
+  }
   function ChoosingAClass(chosenClass) {
     answer = confirm('Are you sure?', 'Yes, No')
     switch (answer) {
@@ -847,14 +927,34 @@ function Kixley() {
           magicalSpells.splice(1, 0, 'heal (30 Blobs of Doom)')
           blobsOfDoom += 50
           magicSkillz += 0.25
-          health += 30
-        }else if (chosenClass = 'super legendary') {
+          hitPoints += 15
+        } else if (chosenClass === 'prince') {
+          attackPower += 4
+          hitPoints += 30
+          blobsOfDoom -= 200
+          magicSkillz -= 0.75
+        } else if (chosenClass === 'arch-mage') {
+          attackPower -= 4
+          hitPoints -= 30
+          blobsOfDoom += 200
+          magicSkillz += 0.75
+        } else if (chosenClass === 'thief') {
+          attackPower -= 1
+          blobsOfDoom -= 50
+          accuracy += 5
+          dropMult += 0.5
+        } else if (chosenClass === 'ninja') {
+          attackPower -= 2
+          blobsOfDoom -= 50
+          accuracy += 5
+          monsAcc -= 10
+        } else if (chosenClass === 'super legendary') {
           magicSkillz = (1 / x)
           attackPower -= 5
           totalHealth -= 75
           hitPoints -= 75
           blobsOfDoom -= 300
-        } else if (chosenClass = 'super hardcore') {
+        } else if (chosenClass === 'super hardcore') {
           magicSkillz = -(Math.log(0))
           attackPower = -(Math.log(0))
           totalHealth = -(Math.log(0))
@@ -873,13 +973,13 @@ function Kixley() {
 
   function ChooseClass() {
     alert('Along with difficulty, we need you to choose your class. Please select one now.')
-    chosenClass = prompt('The classes are: Knights, Mages, Barbarians, and Clerics', 'Knight, Mage, Barbarian, Cleric').toLowerCase()
+    chosenClass = prompt('The classes are: Knights, Mages, Barbarians, Clerics, Princes, Arch-Mages, Thieves, and Ninjas', 'Knight, Mage, Barbarian, Cleric, Prince, Arch-Mage, Thief, Ninja').toLowerCase()
     switch (chosenClass) {
       case 'knight':
         KnightClass()
         break;
       case 'mage':
-      case 'knight, mage, barbarian, cleric':
+      case 'knight, mage, barbarian, cleric, pince, arch-mage, thief, ninja':
         MageClass()
         break;
       case 'barbarian':
@@ -887,6 +987,18 @@ function Kixley() {
         break;
       case 'cleric':
         ClericClass()
+        break;
+      case 'prince':
+        PrinceClass()
+        break;
+      case 'arch-mage':
+        ArchmageClass()
+        break;
+      case 'thief':
+        ThiefClass()
+        break;
+      case 'ninja':
+        NinjaClass()
         break;
       case 'super legendary':
         SuperLegendaryClass()
@@ -974,6 +1086,8 @@ function Kixley() {
   }
 
   function MonsAtt() {
+    if (percentChance(monsAtt) === true || monsStreak > 5) {
+      monsStreak = 0;
     if (monsType2 === 'Fighting') {
       randomNumber(1, 10)
       monsAtt = monsLev + 15 - x
@@ -1002,7 +1116,13 @@ function Kixley() {
       alert('You died.')
       GameOver()
     } else {
+      monsStreak += 1
       alert('You have ' + hitPoints + ' health left.')
+      FightMenu()
+    }
+    }
+    else {
+      alert('The monster missed you.')
       FightMenu()
     }
   }
@@ -1170,11 +1290,11 @@ function Kixley() {
   }
 
   function HitOrMiss() {
-    randomNumber(0, Math.pow(accuracy, -1))
-    hit = x
-    if (hit === 0) {
+    if (percentChance(accuracy) === false && streak <= 5) {
+      streak += 1;
       alert('You miss.')
     } else {
+      streak = 0;
       combo = Math.floor(Math.random() * 5)
       switch (combo) {
         case 0:
@@ -1382,7 +1502,7 @@ function Kixley() {
       } else {
         alert('You pull some speed boots out of your backpack and put them on!')
         alert('Your accuracy was increased by 5%!')
-        accuracy += 0.05
+        accuracy += 5
         usedSpeedBoots = 1
       }
     }
@@ -1552,7 +1672,7 @@ function Kixley() {
       usedWoodenSword = 0
     }
     if (usedSpeedBoots === 1) {
-      accuracy -= 0.05
+      accuracy -= 5
       alert('You put your speed boots back in your backpack.')
       usedSpeedBoots = 0
     }
@@ -1615,12 +1735,12 @@ function Kixley() {
           itemQuestEvaluate()
           break;
           if (questAmt === 1) {
-            newMove = new Move('Whacking', attackPower, attackPower, 'none', 'Punch', 0.25, '75%', 'Quadruped', 'Small')
-            newMove(newMove)
+            /*newMove = new Move('Whacking', attackPower, attackPower, 'none', 'Punch', 0.25, '75%', 'Quadruped', 'Small')
+            newMove(newMove)*/
           }
           if (questAmt === 10) {
-            newMove = new Move('Slicing', attackPower + (attackPower * 0.40), attackPower + (attackPower * 0.40), 'none', 'Greatsword', 0.40, '60%', 'Bipedal', 'Quadruped')
-            newMove(newMove)
+            /*newMove = new Move('Slicing', attackPower + (attackPower * 0.40), attackPower + (attackPower * 0.40), 'none', 'Greatsword', 0.40, '60%', 'Bipedal', 'Quadruped')
+            newMove(newMove)*/
           }
       }
     }
@@ -2576,17 +2696,23 @@ function Kixley() {
           }
           ChooseSpell()
     }
-  }
   function heal() {
-    alert('You chant some moinous-sounding words, and your wounds heal')
-    alert('Hit points restored!')
-    hitPoints += 60
-    blobsOfDoom -= 30
-    burn()
-    MonsAtt()
-    }
-    Choose Spell()
-    }
+    alert('You chant some ominous-sounding words, and your wounds heal');
+    alert('Hit points restored!');
+    hitPoints += 60;
+    blobsOfDoom -= 30;
+    burn();
+    MonsAtt();
+    ChooseSpell();
   }
 }
+  function percentChance(percent) {
+    randomNumber(1, 100)
+    if (x > percent) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
 Kixley()
