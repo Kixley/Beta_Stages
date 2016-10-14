@@ -81,8 +81,10 @@ var magicalSpells = [
   'Fire (20 blobs of doom)',
   'Rage (40 blobs of doom)'
 ];
-var burnEffect = 0;
-var burnTimer = 0;
+var burnEffect = false;
+var burnCounter = 0;
+var poisonEffect = false;
+var poisonCounter = 0
 var useRage = 0;
 var questKillAmt = 0;
 var questKillReq;
@@ -366,82 +368,82 @@ var reward;
     }
   }
   */
-    function NotAnOption() {
-    alert('That wasn\'t one of the options. Please try again.')
+function NotAnOption() {
+  alert('That wasn\'t one of the options. Please try again.')
+}
+
+function percentChance(percent) {
+  randomNumber(1, 100)
+  theVariableWithinPercentChance = x
+  randomNumber(0, 9)
+  x /= 10
+  theVariableWithinPercentChance += x
+  randomNumber(0, 9)
+  x /= 100
+  theVariableWithinPercentChance += x
+  randomNumber(0, 9)
+  x /= 1000
+  theVariableWithinPercentChance += x
+  if (theVariableWithinPercentChance >= 100) {
+    theVariableWithinPercentChance = 100
   }
-  
-  function percentChance(percent) {
-    randomNumber(1, 100)
-    theVariableWithinPercentChance = x
-    randomNumber(0, 9)
-    x /= 10
-    theVariableWithinPercentChance += x
-    randomNumber(0, 9)
-    x /= 100
-    theVariableWithinPercentChance += x
-    randomNumber(0, 9)
-    x /= 1000
-    theVariableWithinPercentChance += x
-    if (theVariableWithinPercentChance >= 100) {
-      theVariableWithinPercentChance = 100
-    }
-    if (theVariableWithinPercentChance <= percent) {
-      return true
-    } else {
-      return false
-    }
+  if (theVariableWithinPercentChance <= percent) {
+    return true
+  } else {
+    return false
   }
-  
-  function roundDamage() {
-    damage = ((Math.round((10 * damage))) / 10)
+}
+
+function roundDamage() {
+  damage = ((Math.round((10 * damage))) / 10)
+}
+
+function checkToEndFight() {
+  if (hitCounter <= 0) {
+    return true
+  } else {
+    return false
   }
-  
-    function checkToEndFight() {
-    if (hitCounter <= 0) {
-      return true
-    } else {
-      return false
-    }
+}
+
+function WonTheFight() {
+  if (inSwamp === 1) {
+    alert('As the ' + actualMonsName + ' dies, you get teleported out of the swamp.')
+    inSwamp = 0
+    swampCounter += 1
+  } else {
+    alert(actualMonsNameWithThe + ' is defeated!')
+    plainsCounter += 1
   }
-  
-    function WonTheFight() {
-    if (inSwamp === 1) {
-      alert('As the ' + actualMonsName + ' dies, you get teleported out of the swamp.')
-      inSwamp = 0
-      swampCounter += 1
-    } else {
-      alert(actualMonsNameWithThe + ' is defeated!')
-      plainsCounter += 1
-    }
-    randomNumber(25, 75)
-    goldDrops = x
-    randomNumber(50, 150)
-    expPoints = x
-    comboMultiplier = 1
-    killCounter += 1
-    if (useRage === 1) {
-      alert('You calm down.')
-      attackPower = realAttackPower
-    }
-    burnEffect = 0
-    alert('You got ' + goldDrops + ' gold and ' + expPoints + ' experience!')
-    totalGold += goldDrops
-    cumulativeGold += goldDrops
-    totalExp += expPoints
-    CheckIfGotAchieve('Gold')
-    alert('You now have ' + totalGold + ' gold and ' + totalExp + ' experience points.')
-    if (onAQuest === 1 && y === 1) {
-      questKillAmt += 1
-    }
-    if (totalExp >= levelReq) {
-      checkForLevelUp()
-    } else {
-      expLeft = levelReq - totalExp
-      alert('You have ' + expLeft + ' experience to go!')
-    }
-    CheckIfGotAchieve('Kill')
+  randomNumber(25, 75)
+  goldDrops = x
+  randomNumber(50, 150)
+  expPoints = x
+  comboMultiplier = 1
+  killCounter += 1
+  if (useRage === 1) {
+    alert('You calm down.')
+    attackPower = realAttackPower
   }
-  
+  burnEffect = 0
+  alert('You got ' + goldDrops + ' gold and ' + expPoints + ' experience!')
+  totalGold += goldDrops
+  cumulativeGold += goldDrops
+  totalExp += expPoints
+  CheckIfGotAchieve('Gold')
+  alert('You now have ' + totalGold + ' gold and ' + totalExp + ' experience points.')
+  if (onAQuest === 1 && y === 1) {
+    questKillAmt += 1
+  }
+  if (totalExp >= levelReq) {
+    checkForLevelUp()
+  } else {
+    expLeft = levelReq - totalExp
+    alert('You have ' + expLeft + ' experience to go!')
+  }
+  CheckIfGotAchieve('Kill')
+}
+
 function detectMobileDevice() {
   if (navigator.userAgent.match(/Android/i) === true || navigator.userAgent.match(/webOS/i) === true || navigator.userAgent.match(/iPhone/i) === true || navigator.userAgent.match(/iPad/i) === true || navigator.userAgent.match(/iPod/i) === true || navigator.userAgent.match(/BlackBerry/i) === true || navigator.userAgent.match(/Windows Phone/i) === true) {
     return true;
@@ -523,14 +525,63 @@ function Options() {
   }
 }
 
+function ChooseSpell() {
+  if (chosenClass === 'cleric') {
+    answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Heal, Cancel').toUpperCase()
+  } else {
+    answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Cancel').toUpperCase()
+  }
+  switch (answer) {
+    case 'CANCEL':
+      FightMenu()
+      break;
+    case 'FIRE':
+      if (blobsOfDoom < 20) {
+        alert('You don\'t have enough blobs of doom!')
+        ChooseSpell()
+      } else {
+        fire()
+      }
+      break;
+    case 'RAGE':
+      if (blobsOfDoom < 40) {
+        alert('You don\'t have enough blobs of doom!')
+        ChooseSpell()
+      } else {
+        rage()
+      }
+      break;
+    case 'HEAL':
+      if (chosenClass !== 'cleric') {
+        alert('You have heard of clerics using this spell, but you don\'t know how to use it.')
+      } else if (blobsOfDoom < 30) {
+        alert('You don\'t have enough blobs of doom!')
+      } else {
+        heal()
+      }
+  }
+}
+
 function burn() {
-  if (burnEffect === 1) {
-    burnTimer += 1
-    if (burnTimer === 5) {
-      burnEffect = 0
-      burnTimer = 0
+  if (burnEffect === true) {
+    burnCounter += 1
+    if (burnCounter === 5) {
+      burnEffect = false
+      burnCounter = 0
     }
     alert(actualMonsNameWithThe + ' takes 5 damage from burning.')
+    hitCounter -= 5
+  }
+}
+
+function poison() {
+  if (poisonEffect === true) {
+    poisonCounter += 1
+    if (poisonCounter === 5) {
+      poisonEffect = false
+      poisonCounter = 0
+    }
+    alert('You take 5 damage from being poisoned.')
     hitCounter -= 5
   }
 }
@@ -1491,15 +1542,20 @@ function MonsAtt() {
   if (percentChance(tempMonsAcc) === true || monsStreak > 5) {
     monsStreak = 0;
     if (monsType === 'Fighting') {
-      randomNumber(1, 10)
+      randomNumber(4, 13)
       monsAtt = monsLev + 15 - x
       monsAttAndDiff = monsAtt * diffSetting
     } else if (monsType === 'Normal') {
-      randomNumber(4, 13)
+      randomNumber(1, 10)
       monsAtt = monsLev + 15 - x
       monsAttAndDiff = monsAtt * diffSetting
     } else if (monsType === 'Poison') {
-      randomNumber(4, 13)
+      randomNumber(1, 10)
+      if (percentChance(66.666) === true) {
+        poisonEffect = true
+        poisonCounter = 0
+      }
+      poison()
       monsAtt = monsLev + 15 - x
       monsAttAndDiff = monsAtt * diffSetting
       randomNumber(1, 3)
@@ -1660,7 +1716,6 @@ function FightMenu() {
                     case 'normal':
                     case 'normal move':*/
       HitOrMiss() //}
-      break;
     case 'USE THE FORCE':
     case 'USE THE FORCE, LUKE':
       if (useTheForceCount <= 0.8) {
@@ -1720,16 +1775,12 @@ function HitOrMiss() {
     alert('You miss.')
   } else if (running === false) {
     if (flamingSword === 'true') {
-      randomNumber(1, 5)
-      switch (x) {
-        case 1:
-        case 2:
-          alert(actualMonsNameWithThe + ' does not catch on fire.')
-          break;
-        default:
-          alert(actualMonsNameWithThe + ' CATCHES ON FIRE!!!!!!!!')
-          burnEffect = 1
-          break;
+      if (percentChance(60) === true) {
+        alert(actualMonsNameWithThe + ' does not catch on fire.')
+      } else {
+        alert(actualMonsNameWithThe + ' CATCHES ON FIRE!!!!!!!!')
+        burnEffect = true
+        burnCounter = 0
       }
     }
     streak = 0;
@@ -2136,43 +2187,6 @@ function SellMenu() {
       alert(theWholeShebang[i])
     }
     window.close()
-  }
-
-  function ChooseSpell() {
-    if (chosenClass === 'cleric') {
-      answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Heal, Cancel').toUpperCase()
-    } else {
-      answer = prompt('What spell? You have ' + blobsOfDoom + ' blobs of doom.', 'List, Fire, Rage, Cancel').toUpperCase()
-    }
-    switch (answer) {
-      case 'CANCEL':
-        FightMenu()
-        break;
-      case 'FIRE':
-        if (blobsOfDoom < 20) {
-          alert('You don\'t have enough blobs of doom!')
-          ChooseSpell()
-        } else {
-          fire()
-        }
-        break;
-      case 'RAGE':
-        if (blobsOfDoom < 40) {
-          alert('You don\'t have enough blobs of doom!')
-          ChooseSpell()
-        } else {
-          rage()
-        }
-        break;
-      case 'HEAL':
-        if (chosenClass !== 'cleric') {
-          alert('You have heard of clerics using this spell, but you don\'t know how to use it.')
-        } else if (blobsOfDoom < 30) {
-          alert('You don\'t have enough blobs of doom!')
-        } else {
-          heal()
-        }
-    }
   }
 
   function ChooseSpec() {
@@ -3078,7 +3092,7 @@ function SellMenu() {
         break;
       default:
         alert(actualMonsNameWithThe + ' CATCHES ON FIRE!!!!!!!!')
-        burnEffect = 1
+        burnEffect = true
         break;
     }
     if (hitCounter <= 0) {
