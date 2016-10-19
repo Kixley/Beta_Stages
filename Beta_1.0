@@ -406,6 +406,24 @@ function checkToEndFight() {
   }
 }
 
+function checkForLevelUp() {
+  if (totalExp >= levelReq) {
+    levelMinusOne = level
+    level += 1
+    temp = Math.floor(1.2 * level)
+    tempMinusOne = temp - 1
+    levelUpHealth = 50
+    levelUpHealth += classHealthChanges[classNumber]
+    levelUpHealth *= levelMinusOne
+    levelUpBlobsOfDoom = 50
+    levelUpBlobsOfDoom *= levelMinusOne
+    alert('You leveled up!')
+    levelReq += levelReq
+    StatToLevelUp()
+    CheckIfGotAchieve('Level')
+  }
+}
+
 function WonTheFight() {
   if (inSwamp === 1) {
     alert('As the ' + actualMonsName + ' dies, you get teleported out of the swamp.')
@@ -1635,6 +1653,38 @@ function InTown() {
   }
 }
 
+function useHealthPotion() {
+  if (healthPotion <= 0) {
+    alert('You search your backpack, but you don’t have a health potion!')
+  } else {
+    alert('You pull a health potion out of your bag and drink it! Yum! It tastes like snickerdoodle cookies!')
+    alert(hpEff + ' hit points restored!')
+    hitPoints += hpEff
+    healthPotion -= 1
+    if (hitPoints > totalHealth) {
+      hitPoints = totalHealth
+    }
+    alert('You now have ' + hitPoints + ' health!')
+  }
+  MonsAtt()
+}
+
+function ChooseSpec() {
+  if (chosenClass === 'ninja' || chosenClass === 'archer') {
+    answer = confirm('Would you like to use your special attack? It is ' + spec[0] + '. \'' + spec[1] + '\'.', 'Yes, No')
+    switch (answer) {
+      case true:
+        doSpec()
+        break;
+      case false:
+        FightMenu()
+    }
+  } else {
+    alert('This class doesn\'t have a special attack!')
+    FightMenu()
+  }
+}
+
 function Story() {
   alert('You are a person named Kixley. You live in the land of Nulm. You are in the Vacant Plains, and you know the town called Smatino resides nearby. You know where it is, but there are monsters in the plains, and one has just spotted you.')
   alert('Your attack power is ' + attackPower + '.')
@@ -2123,22 +2173,6 @@ function SellMenu() {
       break;
   }
 
-  function useHealthPotion() {
-    if (healthPotion <= 0) {
-      alert('You search your backpack, but you don’t have a health potion!')
-    } else {
-      alert('You pull a health potion out of your bag and drink it! Yum! It tastes like snickerdoodle cookies!')
-      alert(hpEff + ' hit points restored!')
-      hitPoints += hpEff
-      healthPotion -= 1
-      if (hitPoints > totalHealth) {
-        hitPoints = totalHealth
-      }
-      alert('You now have ' + hitPoints + ' health!')
-    }
-    MonsAtt()
-  }
-
   function InInn() {
     alert('A musty scent fills your nose as you walk into the inn. The dim lights are a stark difference from the outside, and it takes a moment for your eyes to adjust. When they do, they show you a man grinning at you. "Welcom\' to the Rowdy Barstead. You ca\' spend the night here if you like. Only 50 gold. You can also go to the common room. Do jobs fer money. Buy stuff real cheap.')
     answer = prompt('So whadda you say?', 'Yes, No, Common Room').toUpperCase()
@@ -2187,22 +2221,6 @@ function SellMenu() {
       alert(theWholeShebang[i])
     }
     window.close()
-  }
-
-  function ChooseSpec() {
-    if (chosenClass === 'ninja' || chosenClass === 'archer') {
-      answer = confirm('Would you like to use your special attack? It is ' + spec[0] + '. \'' + spec[1] + '\'.', 'Yes, No')
-      switch (answer) {
-        case true:
-          doSpec()
-          break;
-        case false:
-          FightMenu()
-      }
-    } else {
-      alert('This class doesn\'t have a special attack!')
-      FightMenu()
-    }
   }
 
   function doSpec() {
@@ -2771,24 +2789,6 @@ function SellMenu() {
       default:
         return false
         break;
-    }
-  }
-
-  function checkForLevelUp() {
-    if (totalExp >= levelReq) {
-      levelMinusOne = level
-      level += 1
-      temp = Math.floor(1.2 * level)
-      tempMinusOne = temp - 1
-      levelUpHealth = 50
-      levelUpHealth += classHealthChanges[classNumber]
-      levelUpHealth *= levelMinusOne
-      levelUpBlobsOfDoom = 50
-      levelUpBlobsOfDoom *= levelMinusOne
-      alert('You leveled up!')
-      levelReq += levelReq
-      StatToLevelUp()
-      CheckIfGotAchieve('Level')
     }
   }
 
